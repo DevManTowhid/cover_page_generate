@@ -1,70 +1,149 @@
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cover Page Generator</title>
+  <script src="data.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="w-full max-w-md p-6 bg-white shadow-lg rounded-lg space-y-4">
+    <input 
+      type="text" 
+      id="Course Code" 
+      placeholder="Enter Course Code" 
+      class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" 
+      required
+    >
+    <input 
+      type="text" 
+      id="Course Title" 
+      placeholder="Enter Course Title" 
+      class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" 
+      required
+    >
+    <input 
+      type="text" 
+      id="Submitted to Name" 
+      placeholder="Enter Submitted to Name" 
+      class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" 
+      required
+    >
+    <input 
+      type="text" 
+      id="Submitted to Details" 
+      placeholder="Enter Submitted to Details" 
+      class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" 
+      required
+    >
+    <input 
+      type="text" 
+      id="Submitted by Name" 
+      placeholder="Enter Submitted by Name" 
+      class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" 
+      required
+    >
+    <input 
+      type="text" 
+      id="Submitted by Details" 
+      placeholder="Enter Submitted by Details" 
+      class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" 
+      required
+    >
+    <select 
+      id="reportTypeSelect" 
+      class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
+      <option value="">Select Report Type</option>
+    </select>
+    <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        Submit
+    </button>
+  </div>
+
+  <script>
     const reportTypes = ["Lab Report", "Project Report", "Assignment", "Internship", "Thesis"];
     const reportTypeSelect = document.getElementById('reportTypeSelect');
-    reportTypes.forEach(type => {
+    reportTypes.forEach((type) => {
       const option = document.createElement('option');
       option.value = type;
       option.textContent = type;
       reportTypeSelect.appendChild(option);
     });
-
-    const previewContainer = document.createElement("div");
-    previewContainer.className = "mt-8 p-6 bg-white shadow-lg rounded-lg w-full max-w-2xl mx-auto text-center font-serif space-y-4 hidden";
-    document.body.appendChild(previewContainer);
-
-    document.getElementById("generatePDF").addEventListener("click", () => {
-      const courseCode = document.getElementById("CourseCode").value;
-      const courseTitle = document.getElementById("CourseTitle").value;
-      const submittedToName = document.getElementById("SubmittedToName").value;
-      const submittedToDetails = document.getElementById("SubmittedToDetails").value;
-      const submittedByName = document.getElementById("SubmittedByName").value;
-      const submittedByDetails = document.getElementById("SubmittedByDetails").value;
-      const reportType = document.getElementById("reportTypeSelect").value;
-
-      if (!courseCode || !courseTitle || !submittedToName || !submittedToDetails || !submittedByName || !submittedByDetails || !reportType) {
-        alert("Please fill in all fields.");
-        return;
-      }
-
-      previewContainer.innerHTML = ""; // clear previous preview
-      previewContainer.classList.remove("hidden");
-
-      const logo = new Image();
-      logo.src = "image.png";
-      logo.className = "w-24 h-24 mx-auto";
-
-      previewContainer.appendChild(logo);
-      previewContainer.innerHTML += `
-        <h2 class="text-xl font-bold">${window.headline1}</h2>
-        <h3 class="text-lg">${window.headline2}</h3>
-
-        <p><strong>Course Code:</strong> ${courseCode}</p>
-        <p><strong>Course Title:</strong> ${courseTitle}</p>
-        <p class="font-bold mt-4">${reportType}</p>
-
-        <div class="mt-4">
-          <p class="font-semibold">Submitted to:</p>
-          <p>${submittedToName}</p>
-          <p>${submittedToDetails}</p>
-        </div>
-
-        <div class="mt-4">
-          <p class="font-semibold">Submitted by:</p>
-          <p>${submittedByName}</p>
-          <p>${submittedByDetails}</p>
-        </div>
-      `;
-
-      // Uncomment this later when you want to enable download
-      /*
-      html2pdf().from(previewContainer).set({
-        margin: 10,
-        filename: `${courseCode}_${reportType.replace(/\s+/g, '_')}_Cover.pdf`,
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      }).save();
-      */
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const reportTypes = ["Lab Report", "Project Report", "Assignment", "Internship", "Thesis"];
+      const reportTypeSelect = document.getElementById('reportTypeSelect');
+      reportTypes.forEach(type => {
+        const option = document.createElement('option');
+        option.value = type;
+        option.textContent = type;
+        reportTypeSelect.appendChild(option);
+      });
+  
+      const previewContainer = document.createElement("div");
+      previewContainer.className = "mt-8 p-6 bg-white shadow-lg rounded-lg w-full max-w-2xl mx-auto text-center font-serif space-y-4 hidden";
+      document.body.appendChild(previewContainer);
+  
+      document.getElementById("generatePDF").addEventListener("click", () => {
+        const courseCode = document.getElementById("CourseCode").value;
+        const courseTitle = document.getElementById("CourseTitle").value;
+        const submittedToName = document.getElementById("SubmittedToName").value;
+        const submittedToDetails = document.getElementById("SubmittedToDetails").value;
+        const submittedByName = document.getElementById("SubmittedByName").value;
+        const submittedByDetails = document.getElementById("SubmittedByDetails").value;
+        const reportType = document.getElementById("reportTypeSelect").value;
+  
+        if (!courseCode || !courseTitle || !submittedToName || !submittedToDetails || !submittedByName || !submittedByDetails || !reportType) {
+          alert("Please fill in all fields.");
+          return;
+        }
+  
+        previewContainer.innerHTML = ""; // clear previous preview
+        previewContainer.classList.remove("hidden");
+  
+        const logo = new Image();
+        logo.src = "image.png";
+        logo.className = "w-24 h-24 mx-auto";
+  
+        previewContainer.appendChild(logo);
+        previewContainer.innerHTML += `
+          <h2 class="text-xl font-bold">${window.headline1}</h2>
+          <h3 class="text-lg">${window.headline2}</h3>
+  
+          <p><strong>Course Code:</strong> ${courseCode}</p>
+          <p><strong>Course Title:</strong> ${courseTitle}</p>
+          <p class="font-bold mt-4">${reportType}</p>
+  
+          <div class="mt-4">
+            <p class="font-semibold">Submitted to:</p>
+            <p>${submittedToName}</p>
+            <p>${submittedToDetails}</p>
+          </div>
+  
+          <div class="mt-4">
+            <p class="font-semibold">Submitted by:</p>
+            <p>${submittedByName}</p>
+            <p>${submittedByDetails}</p>
+          </div>
+        `;
+  
+        // Uncomment this later when you want to enable download
+        /*
+        html2pdf().from(previewContainer).set({
+          margin: 10,
+          filename: `${courseCode}_${reportType.replace(/\s+/g, '_')}_Cover.pdf`,
+          html2canvas: { scale: 2 },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).save();
+        */
+      });
     });
-  });
-</script>
+  </script>
+  
+  
+</body>
+</html>
