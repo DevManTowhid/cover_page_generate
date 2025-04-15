@@ -1,17 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        Cover Page Generator
-    </title>
-    <script src="data.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet">
-    
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cover Page Generator</title>
+  <script src="data.js" defer></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <img style="width:50px; height:50px" src="image.png" alt="">
-    
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="w-full max-w-md p-6 bg-white shadow-lg rounded-lg space-y-4">
+    <input 
+      type="text" 
+      id="Course Code" 
+      placeholder="Enter Course Code" 
+      class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" 
+      required
+    >
+    <input 
+      type="text" 
+      id="Course Title" 
+      placeholder="Enter Course Title" 
+      class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" 
+      required
+    >
+    <input 
+      type="text" 
+      id="Submitted to Name" 
+      placeholder="Enter Submitted to Name" 
+      class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" 
+      required
+    >
+    <input 
+      type="text" 
+      id="Submitted to Details" 
+      placeholder="Enter Submitted to Email" 
+      class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" 
+      required
+    >
+    <input 
+      type="text" 
+      id="Submitted by Name" 
+      placeholder="Enter Submitted by Name" 
+      class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" 
+      required
+    >
+    <input 
+      type="text" 
+      id="Submitted by Details" 
+      placeholder="Enter Submitted by Details" 
+      class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" 
+      required
+    >
+    <select 
+      id="reportTypeSelect" 
+      class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
+      <option value="">Select Report Type</option>
+    </select>
+    <button type="submit">
+
+    </button>
+  </div>
+
+  <script>
+    const reportTypes = ["Lab Report", "Project Report", "Assignment", "Internship", "Thesis"];
+    const reportTypeSelect = document.getElementById('reportTypeSelect');
+    reportTypes.forEach((type) => {
+      const option = document.createElement('option');
+      option.value = type;
+      option.textContent = type;
+      reportTypeSelect.appendChild(option);
+    });
+  </script>
 </body>
 </html>
